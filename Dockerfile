@@ -2,7 +2,7 @@ FROM alpine:latest
 
 ENV NGINX_VERSION=1.27.2
 ENV NJS_VERSION=0.8.8
-RUN apk add --no-cache ca-certificates curl bash tree tzdata pcre2 && \
+RUN apk add --no-cache ca-certificates curl bash tree tzdata pcre2 geoip gd libxml2 libxslt && \
     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A && \
     CONFIG="\
@@ -34,9 +34,6 @@ RUN GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A && \
         --with-http_secure_link_module \
         --with-http_stub_status_module \
         --with-http_auth_request_module \
-        --with-http_xslt_module=dynamic \
-        --with-http_image_filter_module=dynamic \
-        --with-http_geoip_module=dynamic \
         --with-http_dav_module \
         --with-threads \
         --with-stream \
@@ -50,6 +47,9 @@ RUN GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A && \
         --with-compat \
         --with-file-aio \
         --with-http_v2_module \
+        --with-http_xslt_module=dynamic \
+        --with-http_image_filter_module=dynamic \
+        --with-http_geoip_module=dynamic \
         --add-dynamic-module=/usr/src/njs/nginx \
     " && \
     set -x && \
