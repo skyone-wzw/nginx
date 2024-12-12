@@ -1,0 +1,11 @@
+services:
+  nginx:
+    container_name: nginx
+    image: ghcr.io/skyone-wzw/nginx:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./config:/etc/nginx/conf.d
+      - ./www:/var/www
+      - ./njs:/var/njs

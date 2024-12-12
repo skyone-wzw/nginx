@@ -33,6 +33,8 @@ jobs:
           if [ "$local_nginx_version" != "$remote_nginx_version" ] || [ "$local_njs_version" != "$remote_njs_version" ]; then
             sed -i "s/ENV NGINX_VERSION=$local_nginx_version/ENV NGINX_VERSION=$remote_nginx_version/" Dockerfile
             sed -i "s/ENV NJS_VERSION=$local_njs_version/ENV NJS_VERSION=$remote_njs_version/" Dockerfile
+            sed -i "s/v$local_nginx_version/v$remote_nginx_version/" README.md
+            sed -i "s/v$local_njs_version/v$remote_njs_version/" README.md
             echo "NEED_UPDATE=true" >> $GITHUB_OUTPUT
             echo "OLD_NGINX_VERSION=$local_nginx_version" >> $GITHUB_OUTPUT
             echo "OLD_NJS_VERSION=$local_njs_version" >> $GITHUB_OUTPUT
@@ -45,7 +47,6 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         if: steps.check.outputs.NEED_UPDATE == 'true'
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: Update NGINX and NJS versions
           title: Update NGINX and NJS versions
           body: |
@@ -63,5 +64,6 @@ jobs:
           draft: false
           signoff: true
           delete-branch: true
-          changes: |
-            Dockerfile: Dockerfile
+          add-paths: |
+            Dockerfile
+            README.md

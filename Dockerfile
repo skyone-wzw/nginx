@@ -25,7 +25,6 @@ RUN GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A && \
         --with-http_realip_module \
         --with-http_addition_module \
         --with-http_sub_module \
-        --with-http_dav_module \
         --with-http_flv_module \
         --with-http_mp4_module \
         --with-http_gunzip_module \
@@ -34,7 +33,6 @@ RUN GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A && \
         --with-http_secure_link_module \
         --with-http_stub_status_module \
         --with-http_auth_request_module \
-        --with-http_dav_module \
         --with-threads \
         --with-stream \
         --with-stream_ssl_module \
@@ -47,6 +45,7 @@ RUN GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A && \
         --with-compat \
         --with-file-aio \
         --with-http_v2_module \
+        --with-http_dav_module \
         --with-http_xslt_module=dynamic \
         --with-http_image_filter_module=dynamic \
         --with-http_geoip_module=dynamic \
