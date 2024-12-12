@@ -1,0 +1,67 @@
+name: Check version
+on:
+  schedule:
+    - cron: '0 21 * * *'
+  workflow_dispatch:
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Check version
+        id: check
+        run: |
+          local_nginx_version=$(grep -oE 'ENV NGINX_VERSION=[0-9.]*' Dockerfile | cut -d= -f2)
+          local_njs_version=$(grep -oE 'ENV NJS_VERSION=[0-9.]*' Dockerfile | cut -d= -f2)
+          
+          remote_nginx_version=$(curl -s https://api.github.com/repos/nginx/nginx/releases/latest | jq -r '.tag_name' | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')
+          remote_njs_version=$(curl -s https://api.github.com/repos/nginx/njs/tags | jq -r '.[0].name' | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')
+          echo "Check Nginx Version ..."
+          python3 compare_versions.py $local_nginx_version $remote_nginx_version
+          echo "Check NJS Version ..."
+          python3 compare_versions.py $local_njs_version $remote_njs_version
+
+          if [ "$local_nginx_version" != "$remote_nginx_version" ] || [ "$local_njs_version" != "$remote_njs_version" ]; then
+            sed -i "s/ENV NGINX_VERSION=$local_nginx_version/ENV NGINX_VERSION=$remote_nginx_version/" Dockerfile
+            sed -i "s/ENV NJS_VERSION=$local_njs_version/ENV NJS_VERSION=$remote_njs_version/" Dockerfile
+            echo "NEED_UPDATE=true" >> $GITHUB_OUTPUT
+            echo "OLD_NGINX_VERSION=$local_nginx_version" >> $GITHUB_OUTPUT
+            echo "OLD_NJS_VERSION=$local_njs_version" >> $GITHUB_OUTPUT
+            echo "NGINX_VERSION=$remote_nginx_version" >> $GITHUB_OUTPUT
+            echo "NJS_VERSION=$remote_njs_version" >> $GITHUB_OUTPUT
+          else
+            echo "NEED_UPDATE=false" >> $GITHUB_OUTPUT
+          fi
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        if: steps.check.outputs.NEED_UPDATE == 'true'
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Update NGINX and NJS versions
+          title: Update NGINX and NJS versions
+          body: |
+            This PR updates NGINX and NJS versions to the latest available.
+            
+            - Old NGINX version: ${{ steps.check.outputs.OLD_NGINX_VERSION }}
+            - New NGINX version: ${{ steps.check.outputs.NGINX_VERSION }}
+            - Old NJS version: ${{ steps.check.outputs.OLD_NJS_VERSION }}
+            - New NJS version: ${{ steps.check.outputs.NJS_VERSION }}
+          branch: update-versions-${{ github.run_number }}
+          base: master
+          labels: dependencies
+          assignees: ${{ github.actor }}
+          reviewers: ${{ github.actor }}
+          draft: false
+          signoff: true
+          delete-branch: true
+          changes: |
+            Dockerfile: Dockerfile
