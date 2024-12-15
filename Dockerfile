@@ -104,6 +104,7 @@ RUN GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A && \
     strip /usr/lib/nginx/modules/*.so && \
     rm -rf /usr/src/nginx-$NGINX_VERSION && \
     rm -rf /usr/src/njs && \
+    rm -rf /usr/src/nginx-dav-ext-module && \
     apk add --no-cache --virtual .gettext gettext && \
     mv /usr/bin/envsubst /tmp/ && \
     apk del .build-deps && \
