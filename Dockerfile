@@ -46,6 +46,7 @@ RUN GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A && \
         --with-file-aio \
         --with-http_v2_module \
         --with-http_dav_module \
+        --add-module=/usr/src/nginx-dav-ext-module \
         --with-http_xslt_module=dynamic \
         --with-http_image_filter_module=dynamic \
         --with-http_geoip_module=dynamic \
@@ -81,6 +82,7 @@ RUN GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A && \
     mkdir -p /usr/src && \
     tar -zxC /usr/src -f nginx.tar.gz && \
     git clone https://github.com/nginx/njs.git -b $NJS_VERSION --depth=1 /usr/src/njs && \
+    git clone https://github.com/mid1221213/nginx-dav-ext-module.git -b v4.0.1 --depth=1 /usr/src/nginx-dav-ext-module && \
     cd /usr/src/nginx-$NGINX_VERSION && \
     ./configure $CONFIG && \
     make -j$(getconf _NPROCESSORS_ONLN) && \
