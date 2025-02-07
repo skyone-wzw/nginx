@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-ENV NGINX_VERSION=1.27.3
+ENV NGINX_VERSION=1.27.4
 ENV NJS_VERSION=0.8.9
 RUN apk add --no-cache ca-certificates curl bash tree tzdata pcre2 geoip gd libxml2 libxslt && \
     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
