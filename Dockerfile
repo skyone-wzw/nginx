@@ -78,7 +78,7 @@ RUN GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A && \
     export GNUPGHOME="$(mktemp -d)" && \
     gpg --batch --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys $GPG_KEYS && \
     gpg --batch --verify nginx.tar.gz.asc nginx.tar.gz && \
-    rm -r "$GNUPGHOME" nginx.tar.gz.asc && \
+    rm -rf "$GNUPGHOME" nginx.tar.gz.asc && \
     mkdir -p /usr/src && \
     tar -zxC /usr/src -f nginx.tar.gz && \
     git clone https://github.com/nginx/njs.git -b $NJS_VERSION --depth=1 /usr/src/njs && \
