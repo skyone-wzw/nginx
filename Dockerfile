@@ -47,6 +47,7 @@ RUN GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A && \
         --with-http_v2_module \
         --with-http_dav_module \
         --add-module=/usr/src/nginx-dav-ext-module \
+        --add-module=/usr/src/nginx-module-vts \
         --with-http_xslt_module=dynamic \
         --with-http_image_filter_module=dynamic \
         --with-http_geoip_module=dynamic \
@@ -83,6 +84,7 @@ RUN GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A && \
     tar -zxC /usr/src -f nginx.tar.gz && \
     git clone https://github.com/nginx/njs.git -b $NJS_VERSION --depth=1 /usr/src/njs && \
     git clone https://github.com/mid1221213/nginx-dav-ext-module.git -b v4.0.1 --depth=1 /usr/src/nginx-dav-ext-module && \
+    git clone https://github.com/vozlt/nginx-module-vts.git -b v0.2.4 --depth=1 /usr/src/nginx-module-vts && \
     cd /usr/src/nginx-$NGINX_VERSION && \
     ./configure $CONFIG && \
     make -j$(getconf _NPROCESSORS_ONLN) && \
@@ -105,6 +107,7 @@ RUN GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A && \
     rm -rf /usr/src/nginx-$NGINX_VERSION && \
     rm -rf /usr/src/njs && \
     rm -rf /usr/src/nginx-dav-ext-module && \
+    rm -rf /usr/src/nginx-module-vts && \
     apk add --no-cache --virtual .gettext gettext && \
     mv /usr/bin/envsubst /tmp/ && \
     apk del .build-deps && \
