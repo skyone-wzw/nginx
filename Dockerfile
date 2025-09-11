@@ -45,6 +45,7 @@ RUN GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A && \
         --with-compat \
         --with-file-aio \
         --with-http_v2_module \
+        --with-http_v3_module \
         --with-http_dav_module \
         --add-module=/usr/src/nginx-dav-ext-module \
         --add-module=/usr/src/nginx-module-vts \
