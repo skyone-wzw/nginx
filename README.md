@@ -20,10 +20,10 @@ Docker image tag name:
 
 Current latest nginx version: v1.29.4
 
-Current latest njs version: v0.9.4
+Current latest njs version: v0.9.5
 
 ```shell
-docker pull ghcr.io/skyone-wzw/nginx:v1.29.4-v0.9.4
+docker pull ghcr.io/skyone-wzw/nginx:v1.29.4-v0.9.5
 ```
 
 Minimal example:
