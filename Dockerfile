@@ -4,7 +4,7 @@ ENV NGINX_VERSION=1.29.5
 ENV NJS_VERSION=0.9.6
 RUN apk add --no-cache ca-certificates curl bash tree tzdata pcre2 geoip gd libxml2 libxslt quickjs-libs && \
     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-RUN GPG_KEYS=D6786CE303D9A9022998DC6CC8464D549AF75C0A && \
+RUN GPG_KEYS="D6786CE303D9A9022998DC6CC8464D549AF75C0A 43387825DDB1BB97EC36BA5D007C8D7C15D87369" && \
     CONFIG="\
         --prefix=/etc/nginx \
         --sbin-path=/usr/sbin/nginx \
