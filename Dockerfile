@@ -81,6 +81,7 @@ RUN GPG_KEYS="D6786CE303D9A9022998DC6CC8464D549AF75C0A 43387825DDB1BB97EC36BA5D0
     export GNUPGHOME="$(mktemp -d)" && \
     gpg --batch --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys $GPG_KEYS && \
     gpg --batch --verify nginx.tar.gz.asc nginx.tar.gz && \
+    gpgconf --kill all || true && \
     rm -rf "$GNUPGHOME" nginx.tar.gz.asc && \
     mkdir -p /usr/src && \
     tar -zxC /usr/src -f nginx.tar.gz && \
