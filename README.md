@@ -18,12 +18,12 @@ Docker image tag name:
 * vx.y.z: Specific version of Nginx
 * vx.y.z-vx.y.z: Specific version of Nginx and njs
 
-Current latest nginx version: v1.31.4
+Current latest nginx version: v1.31.5
 
-Current latest njs version: v1.0.0
+Current latest njs version: v1.0.1
 
 ```shell
-docker pull ghcr.io/skyone-wzw/nginx:v1.31.4-v1.0.0
+docker pull ghcr.io/skyone-wzw/nginx:v1.31.5-v1.0.1
 ```
 
 Minimal example:
