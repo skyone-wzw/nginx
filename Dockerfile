@@ -47,7 +47,6 @@ RUN GPG_KEYS="D6786CE303D9A9022998DC6CC8464D549AF75C0A 43387825DDB1BB97EC36BA5D0
         --with-http_v2_module \
         --with-http_v3_module \
         --with-http_dav_module \
-        --add-module=/usr/src/nginx-dav-ext-module \
         --add-module=/usr/src/nginx-module-vts \
         --add-module=/usr/src/ngx_brotli \
         --with-http_xslt_module=dynamic \
@@ -86,7 +85,6 @@ RUN GPG_KEYS="D6786CE303D9A9022998DC6CC8464D549AF75C0A 43387825DDB1BB97EC36BA5D0
     mkdir -p /usr/src && \
     tar -zxC /usr/src -f nginx.tar.gz && \
     git clone https://github.com/nginx/njs.git -b $NJS_VERSION --depth=1 /usr/src/njs && \
-    git clone https://github.com/mid1221213/nginx-dav-ext-module.git -b v4.0.1 --depth=1 /usr/src/nginx-dav-ext-module && \
     git clone https://github.com/vozlt/nginx-module-vts.git -b v0.2.4 --depth=1 /usr/src/nginx-module-vts && \
     git clone https://github.com/google/ngx_brotli --recurse-submodules -b master --depth=1 /usr/src/ngx_brotli && \
     cd /usr/src/nginx-$NGINX_VERSION && \
